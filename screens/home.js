@@ -21,7 +21,13 @@ export default function Home({ navigation }) {
     setModalOpen(false);
   };
 
+  const deleteReview=(key)=>{
+    setReviews(reviews.filter(review=>review.key!==key))
+    navigation.navigate('Home');
+  }
+  
   return (
+    
     <View style={globalStyles.container}>
   
       <Modal visible={modalOpen} animationType='slide'>
@@ -46,7 +52,7 @@ export default function Home({ navigation }) {
       />
 
       <FlatList data={reviews} renderItem={({ item }) => (
-        <TouchableOpacity onPress={() => navigation.navigate('ReviewDetails', item)}>
+        <TouchableOpacity onPress={() => navigation.navigate('ReviewDetails',{del:deleteReview,item})}>
           <Card>
             <Text style={globalStyles.titleText}>{ item.title }</Text>
           </Card>
