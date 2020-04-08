@@ -17,10 +17,11 @@ export default function App() {
 
   Navigator.router.getStateForAction = (action, state) => {
   // Do not allow to go back from Home
-  if (action.type === 'Navigation/BACK' && state && state.routes[state.index].routeName === 'Drawer') {
+  /*
+  if (action.type === 'Navigation/BACK' && state && state.routes[state.index].routeName === 'Home') {
     return null;
   }
-
+  */
   // Do not allow to go back to Login
   if (action.type === 'Navigation/BACK' && state) {
     const newRoutes = state.routes.filter(r => r.routeName !== 'Login');
