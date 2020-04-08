@@ -1,10 +1,15 @@
 import React from 'react';
-import { createStackNavigator } from 'react-navigation-stack';
+import { createSwitchNavigator } from 'react-navigation';
 import { createAppContainer} from 'react-navigation';
+
+import Loading from '../screens/loading';
 import LoginScreen from '../screens/loginScreen';
 import RootDrawer from './drawer';
 import SignupScreen from '../screens/signupScreen';
 const screens = {
+  Loading:{
+    screen:Loading,
+  },
   Login: {
     screen: LoginScreen,
   },
@@ -16,11 +21,8 @@ const screens = {
   },
 };
 
-const LoginStack = createStackNavigator(screens,{
-    headerMode: 'none',
-    navigationOptions: {
-        gesturesEnabled: false
-      }
+const LoginStack = createSwitchNavigator(screens,{
+  initialRouteName:'Loading'  
 });
 
 export default createAppContainer(LoginStack);

@@ -8,7 +8,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 export default function reviewDetails({navigation}) {
     
   
-  console.log(navigation);
+  //console.log(navigation);
   const item=(navigation.state.params.item);
   const rating = item.rating;
   const key=item.key;

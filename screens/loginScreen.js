@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
 import { Formik } from 'formik';
 import { globalStyles } from '../styles/global.js';
@@ -16,16 +16,25 @@ const reviewSchema = yup.object({
 
 export default function Login({navigation}){
 
+    const[errorMessage,setError]=useState("")
+
+    const handleError=(error)=>{
+        setError(error.errorMessage)
+    }
+
     const handleLogin = (user) => {
         Firebase
         .auth()   
         .signInWithEmailAndPassword(user.email, user.password)
-        .then(() => navigation.navigate('Drawer'))
-        .catch(error => this.setState({ errorMessage: error.message }))
+        .then(() => navigation.navigate('Loading'))
+        .catch(error => handleError({ errorMessage: error.message }))
     }
     return (
         <View style={globalStyles.container}>
           <Text>Login</Text>
+          <Text style={{ color: 'red' }}>
+            {errorMessage}
+          </Text>
           <Formik
             initialValues={{ email: '',password: '' }}
             validationSchema={reviewSchema}
