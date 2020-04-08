@@ -17,12 +17,16 @@ export default function Signup({navigation}){
 
     const[errorMessage,setError]=useState("")
 
-     const handleSignUp = (user) => {
-        Firebase
+    const handleError=(error)=>{
+        setError(error.errorMessage)
+    }
+
+    const handleSignUp = (user) => {
+    Firebase
         .auth()
         .createUserWithEmailAndPassword(user.email, user.password)
         .then(() => navigation.navigate('Loading'))
-        .catch(error =>setError({ errorMessage: error.message }))
+        .catch(error =>handleError({ errorMessage: error.message }))
     }
       return (
         <View style={globalStyles.container}>
