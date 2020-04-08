@@ -3,7 +3,7 @@ import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
 import { Formik } from 'formik';
 import { globalStyles } from '../styles/global.js';
 import * as yup from 'yup';
-import Firebase from '../config/firebase'   
+import Firebase from '../config/firebase'
 
 
 const reviewSchema = yup.object({
@@ -13,25 +13,23 @@ const reviewSchema = yup.object({
       .required()
       .min(8),
   });
-
-export default function Login({navigation}){
-
-    const handleLogin = (user) => {
+export default function Signup({navigation}){
+     const handleSignUp = (user) => {
         Firebase
-        .auth()   
-        .signInWithEmailAndPassword(user.email, user.password)
+        .auth()
+        .createUserWithEmailAndPassword(user.email, user.password)
         .then(() => navigation.navigate('Drawer'))
         .catch(error => this.setState({ errorMessage: error.message }))
     }
-    return (
+      return (
         <View style={globalStyles.container}>
-          <Text>Login</Text>
+          <Text>Sign Up</Text>
           <Formik
             initialValues={{ email: '',password: '' }}
             validationSchema={reviewSchema}
             onSubmit={(values, actions) => {
             actions.resetForm(); 
-            handleLogin(values);
+            handleSignUp(values);
             }}
         >
             {props => (
@@ -55,10 +53,10 @@ export default function Login({navigation}){
                     value={props.values.password}
                 />
                 <Text style={globalStyles.errorText}>{props.touched.password && props.errors.password}</Text>
-                <Button title="Login" onPress={props.handleSubmit} />
+                <Button title="Signup" onPress={props.handleSubmit} />
                 <Button
-                    title="Don't have an account? Sign Up"
-                    onPress={() => navigation.navigate('Signup')}
+                    title="Already have an account? Login"
+                    onPress={() =>navigation.navigate('Login')}
                 />
                 </View>
           )}
@@ -67,19 +65,3 @@ export default function Login({navigation}){
         
       )
 }
-
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
-    textInput: {
-      height: 40,
-      width: '90%',
-      borderColor: 'gray',
-      borderWidth: 1,
-      marginTop: 8
-    }
-  })
