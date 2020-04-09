@@ -2,11 +2,9 @@ import React, { useState, useEffect } from "react";
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native'
 import Firebase from '../config/firebase' 
 
-export default function Loading({navigation}) {
+export default function Logout({navigation}) {
     useEffect(()=> {
-        Firebase.auth().onAuthStateChanged(user => {
-        navigation.navigate(user ? 'Drawer' : 'Login')
-    })
+        Firebase.auth().signOut()
     })
     return(
         <View style={styles.container}>

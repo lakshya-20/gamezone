@@ -2,6 +2,7 @@ import { createDrawerNavigator} from 'react-navigation-drawer';
 
 import HomeStack from './homeStack';
 import AboutStack from './aboutStack';
+import loginScreen from '../screens/logoutScreen';
 
 const screens={
     Home:{
@@ -9,6 +10,9 @@ const screens={
     },
     About:{
         screen:AboutStack,
+    },
+    Logout:{
+        screen:loginScreen
     }
 };
 
