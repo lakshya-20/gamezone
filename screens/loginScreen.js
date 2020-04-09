@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
+import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity } from 'react-native'
 import { Formik } from 'formik';
-import { globalStyles } from '../styles/global.js';
+import { formGlobalStyles } from '../styles/formGlobal.js';
 import * as yup from 'yup';
 import Firebase from '../config/firebase'   
 
@@ -30,8 +30,9 @@ export default function Login({navigation}){
         .catch(error => handleError({ errorMessage: error.message }))
     }
     return (
-        <View style={globalStyles.container}>
-          <Text>Login</Text>
+        <View style={formGlobalStyles.container}>
+          <Text style={formGlobalStyles.titleText}>GAMEZONE</Text>
+          <Text style={formGlobalStyles.pageText}>Login</Text>
           <Text style={{ color: 'red' }}>
             {errorMessage}
           </Text>
@@ -46,29 +47,36 @@ export default function Login({navigation}){
             {props => (
                 <View>
                 <TextInput
-                    style={globalStyles.textInput}
+                    style={formGlobalStyles.textInput}
                     autoCapitalize="none"
                     placeholder="Email"
                     onChangeText={props.handleChange('email')}
                     onBlur={props.handleBlur('email')} 
                     value={props.values.email}
                 />
-                <Text style={globalStyles.errorText}>{props.touched.email && props.errors.email}</Text>
+                <Text style={formGlobalStyles.errorText}>{props.touched.email && props.errors.email}</Text>
                 <TextInput
                     secureTextEntry
-                    style={globalStyles.textInput}
+                    style={formGlobalStyles.textInput}
                     autoCapitalize="none"
                     placeholder="Password"
                     onChangeText={props.handleChange('password')}
                     onBlur={props.handleBlur('password')}
                     value={props.values.password}
                 />
-                <Text style={globalStyles.errorText}>{props.touched.password && props.errors.password}</Text>
-                <Button title="Login" onPress={props.handleSubmit} />
-                <Button
-                    title="Don't have an account? Sign Up"
-                    onPress={() => navigation.navigate('Signup')}
-                />
+                <Text style={formGlobalStyles.errorText}>{props.touched.password && props.errors.password}</Text>
+                <View style={{justifyContent: 'center',alignItems: 'center',}}>
+                  <TouchableOpacity onPress={props.handleSubmit} style={formGlobalStyles.buttonContainer}>
+                    <Text style={formGlobalStyles.button}>
+                      Login
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() =>navigation.navigate('Signup')} style={formGlobalStyles.buttonContainer}>
+                    <Text style={formGlobalStyles.button}>
+                    Don't have an account? Sign Up
+                    </Text>
+                  </TouchableOpacity>
+                </View>
                 </View>
           )}
           </Formik>
@@ -77,18 +85,3 @@ export default function Login({navigation}){
       )
 }
 
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
-    textInput: {
-      height: 40,
-      width: '90%',
-      borderColor: 'gray',
-      borderWidth: 1,
-      marginTop: 8
-    }
-  })

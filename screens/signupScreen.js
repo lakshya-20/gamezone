@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
+import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity } from 'react-native'
 import { Formik } from 'formik';
-import { globalStyles } from '../styles/global.js';
+import { formGlobalStyles } from '../styles/formGlobal.js';
 import * as yup from 'yup';
 import Firebase from '../config/firebase'
 
@@ -29,8 +29,9 @@ export default function Signup({navigation}){
         .catch(error =>handleError({ errorMessage: error.message }))
     }
       return (
-        <View style={globalStyles.container}>
-          <Text>Sign Up</Text>
+        <View style={formGlobalStyles.container}>
+          <Text style={formGlobalStyles.titleText}>GAMEZONE</Text>
+          <Text style={formGlobalStyles.pageText}>Sign Up</Text>
           <Text style={{ color: 'red' }}>
             {errorMessage}
           </Text>
@@ -38,36 +39,43 @@ export default function Signup({navigation}){
             initialValues={{ email: '',password: '' }}
             validationSchema={reviewSchema}
             onSubmit={(values, actions) => {
-            actions.resetForm(); 
+            actions.resetForm();    
             handleSignUp(values);
             }}
         >
             {props => (
                 <View>
                 <TextInput
-                    style={globalStyles.textInput}
+                    style={formGlobalStyles.textInput}
                     autoCapitalize="none"
                     placeholder="Email"
                     onChangeText={props.handleChange('email')}
                     onBlur={props.handleBlur('email')} 
                     value={props.values.email}
                 />
-                <Text style={globalStyles.errorText}>{props.touched.email && props.errors.email}</Text>
+                <Text style={formGlobalStyles.errorText}>{props.touched.email && props.errors.email}</Text>
                 <TextInput
                     secureTextEntry
-                    style={globalStyles.textInput}
+                    style={formGlobalStyles.textInput}
                     autoCapitalize="none"
                     placeholder="Password"
                     onChangeText={props.handleChange('password')}
                     onBlur={props.handleBlur('password')}
                     value={props.values.password}
                 />
-                <Text style={globalStyles.errorText}>{props.touched.password && props.errors.password}</Text>
-                <Button title="Signup" onPress={props.handleSubmit} />
-                <Button
-                    title="Already have an account? Login"
-                    onPress={() =>navigation.navigate('Login')}
-                />
+                <Text style={formGlobalStyles.errorText}>{props.touched.password && props.errors.password}</Text>
+                <View style={{justifyContent: 'center',alignItems: 'center',}}>
+                <TouchableOpacity onPress={props.handleSubmit} style={formGlobalStyles.buttonContainer}>
+                  <Text style={formGlobalStyles.button}>
+                    Signup
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() =>navigation.navigate('Login')} style={formGlobalStyles.buttonContainer}>
+                  <Text style={formGlobalStyles.button}>
+                    Already have an account? Login
+                  </Text>
+                </TouchableOpacity>
+                </View>
                 </View>
           )}
           </Formik>
